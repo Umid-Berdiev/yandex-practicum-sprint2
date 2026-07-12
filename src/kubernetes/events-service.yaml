@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: events-service
-          image: ghcr.io/db-exp/cinemaabysstest/events-service:latest
-          imagePullPolicy: Always
+          image: yandex-practicum-sprint2-events-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8082
           env:

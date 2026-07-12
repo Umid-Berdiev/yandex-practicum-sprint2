@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: proxy-service
-          image: ghcr.io/db-exp/cinemaabysstest/proxy-service:latest
-          imagePullPolicy: Always
+          image: yandex-practicum-sprint2-proxy-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:
