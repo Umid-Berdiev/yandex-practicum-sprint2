@@ -21,40 +21,40 @@ spec:
         app: events-service
     spec:
       containers:
-      - name: events-service
-        image: ghcr.io/db-exp/cinemaabysstest/events-service:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8082
-        env:
-        - name: PORT
-          value: "8082"
-        - name: KAFKA_BROKERS
-          value: "kafka:9092"
-        envFrom:
-        - configMapRef:
-            name: cinemaabyss-config
-        - secretRef:
-            name: cinemaabyss-secrets
-        resources:
-          limits:
-            cpu: "300m"
-            memory: "256Mi"
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-        readinessProbe:
-          httpGet:
-            path: /api/events/health
-            port: 8082
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /api/events/health
-            port: 8082
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        - name: events-service
+          image: ghcr.io/db-exp/cinemaabysstest/events-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8082
+          env:
+            - name: PORT
+              value: "8082"
+            - name: KAFKA_BROKERS
+              value: "kafka:9092"
+          envFrom:
+            - configMapRef:
+                name: cinemaabyss-config
+            - secretRef:
+                name: cinemaabyss-secrets
+          resources:
+            limits:
+              cpu: "300m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
+              path: /api/events/health
+              port: 8082
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/events/health
+              port: 8082
+            initialDelaySeconds: 15
+            periodSeconds: 20
       restartPolicy: Always
       imagePullSecrets:
         - name: dockerconfigjson
@@ -68,6 +68,6 @@ spec:
   selector:
     app: events-service
   ports:
-  - port: 8082
-    targetPort: 8082
+    - port: 8082
+      targetPort: 8082
   type: ClusterIP
