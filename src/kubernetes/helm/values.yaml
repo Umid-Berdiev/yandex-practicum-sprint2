@@ -1,12 +1,10 @@
-# Global settings
 global:
   namespace: cinemaabyss
   domain: cinemaabyss.example.com
 
-# Image pull secrets
 imagePullSecrets:
-  dockerconfigjson: ewoJImF1dGhzIjogewoJCSJnaGNyLmlvIjogewoJCQkiYXV0aCI6
-# Database configuration
+  dockerconfigjson: ewoJImF1dGhzIjogewoJCSJnaGNyLmlvIjogewoJCQkiYXV0aCI6ICJaR0l0Wlhod09tZG9jRjl2UTJocVZIa3dhMWhKVDIxWmFVZHJOV2hRUW10aFVXbFZSbTVaTjJRMFNYUjRZMWM9IgoJCX0KCX0sCgkiY3JlZHNTdG9yZSI6ICJkZXNrdG9wIiwKCSJjdXJyZW50Q29udGV4dCI6ICJkZXNrdG9wLWxpbnV4IiwKCSJwbHVnaW5zIjogewoJCSIteC1jbGktaGludHMiOiB7CgkJCSJlbmFibGVkIjogInRydWUiCgkJfQoJfSwKCSJmZWF0dXJlcyI6IHsKCQkiaG9va3MiOiAidHJ1ZSIKCX0KfQ==
+
 database:
   host: postgres
   port: 5432
@@ -26,16 +24,15 @@ database:
       memory: 512Mi
   persistence:
     enabled: true
-    size: 10Gi
+    size: 1Gi
     accessMode: ReadWriteOnce
 
-# Monolith configuration
 monolith:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/monolith
+    repository: yandex-practicum-sprint2-monolith
     tag: latest
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -49,13 +46,12 @@ monolith:
     targetPort: 8080
     type: ClusterIP
 
-# Proxy service configuration
 proxyService:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/proxy-service
+    repository: yandex-practicum-sprint2-proxy-service
     tag: latest
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -65,17 +61,16 @@ proxyService:
       cpu: 100m
       memory: 128Mi
   service:
-    port: 80
+    port: 8000
     targetPort: 8000
     type: ClusterIP
 
-# Movies service configuration
 moviesService:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/movies-service
+    repository: yandex-practicum-sprint2-movies-service
     tag: latest
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -89,13 +84,12 @@ moviesService:
     targetPort: 8081
     type: ClusterIP
 
-# Events service configuration
 eventsService:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/events-service
+    repository: yandex-practicum-sprint2-events-service
     tag: latest
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   replicas: 1
   resources:
     limits:
@@ -109,7 +103,6 @@ eventsService:
     targetPort: 8082
     type: ClusterIP
 
-# Kafka configuration
 kafka:
   enabled: true
   image:
@@ -120,13 +113,13 @@ kafka:
   resources:
     limits:
       cpu: 1000m
-      memory: 1Gi
+      memory: 2Gi
     requests:
       cpu: 200m
       memory: 512Mi
   persistence:
     enabled: true
-    size: 5Gi
+    size: 2Gi
     accessMode: ReadWriteOnce
   topics:
     - name: movie-events
@@ -139,7 +132,6 @@ kafka:
       partitions: 1
       replicationFactor: 1
 
-# Zookeeper configuration
 zookeeper:
   enabled: true
   image:
@@ -150,7 +142,7 @@ zookeeper:
   resources:
     limits:
       cpu: 500m
-      memory: 512Mi
+      memory: 2Gi
     requests:
       cpu: 100m
       memory: 256Mi
@@ -159,12 +151,10 @@ zookeeper:
     size: 1Gi
     accessMode: ReadWriteOnce
 
-# Ingress configuration
 ingress:
   enabled: true
   className: nginx
   annotations:
-    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   hosts:
     - host: cinemaabyss.example.com
@@ -172,14 +162,12 @@ ingress:
         - path: /
           pathType: Prefix
           service: proxy-service
-          port: 80
+          port: 8000
         - path: /api/events
           pathType: Prefix
           service: events-service
           port: 8082
 
-# Application configuration
 config:
-  # Strangler Fig configuration
   gradualMigration: "true"
   moviesMigrationPercent: "100"
