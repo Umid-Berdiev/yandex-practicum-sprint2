@@ -18,6 +18,37 @@ Postman-тесты к API Gateway успешно пройдены.
 ### 2. Kafka
 
 Реализован MVP-сервис `events` (на Node.js/kafkajs) и добавлен в `./src/microservices/events`. Сервис принимает запросы и публикует/читает сообщения в Kafka топиках `movie-events`, `user-events`, `payment-events`.
+
+#### Как запустить и проверить Kafka
+
+1. **Поднять инфраструктуру:**
+
+   ```bash
+   docker-compose up -d
+   ```
+
+   > Kafka запустится автоматически после того, как Zookeeper и Postgres будут готовы (healthcheck). `events-service` стартует только после готовности Kafka — ручные перезапуски не нужны.
+
+2. **Запустить интеграционные тесты** (проверяют публикацию событий в топики):
+
+   ```bash
+   docker run --rm --network cinemaabyss-network \
+     -v $(pwd)/tests/postman:/etc/newman \
+     -w /etc/newman \
+     postman/newman run CinemaAbyss.postman_collection.json -e docker.environment.json
+   ```
+
+3. **Проверить сообщения в Kafka UI:**
+   Открыть http://localhost:8090 → раздел **Topics** → убедиться, что в топиках `movie-events`, `user-events`, `payment-events` появились сообщения.
+
+4. **Проверить через CLI** (альтернатива UI):
+   ```bash
+   docker exec cinemaabyss-kafka \
+     /opt/kafka/bin/kafka-console-consumer.sh \
+     --bootstrap-server localhost:9092 \
+     --topic movie-events --from-beginning --max-messages 5
+   ```
+
 Скриншоты:
 
 - Тесты: [Скриншот тестов](./screenshots/tests.png)
