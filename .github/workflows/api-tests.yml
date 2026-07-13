@@ -2,21 +2,21 @@ name: API Tests
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to run tests against'
+        description: "Environment to run tests against"
         required: true
-        default: 'docker'
+        default: "docker"
         type: choice
         options:
           - local
           - docker
       test_folder:
-        description: 'Test folder to run (leave empty for all)'
+        description: "Test folder to run (leave empty for all)"
         required: false
         type: string
 
@@ -24,7 +24,7 @@ jobs:
   api-tests:
     name: Run API Tests
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
