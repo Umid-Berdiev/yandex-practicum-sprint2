@@ -32,6 +32,9 @@ jobs:
       - name: Set up Docker Compose
         run: docker compose --version
 
+      - name: Create .env file
+        run: cp .env.example .env
+
       - name: Start services with Docker Compose
         run: |
           docker compose up -d --build
