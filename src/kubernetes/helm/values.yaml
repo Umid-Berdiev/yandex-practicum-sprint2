@@ -32,9 +32,9 @@ database:
 monolith:
   enabled: true
   image:
-    repository: yandex-practicum-sprint2-monolith
+    repository: ghcr.io/umid-berdiev/yandex-practicum-sprint2/monolith
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   replicas: 1
   resources:
     limits:
@@ -51,9 +51,9 @@ monolith:
 proxyService:
   enabled: true
   image:
-    repository: yandex-practicum-sprint2-proxy-service
+    repository: ghcr.io/umid-berdiev/yandex-practicum-sprint2/proxy-service
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   replicas: 1
   resources:
     limits:
@@ -70,9 +70,9 @@ proxyService:
 moviesService:
   enabled: true
   image:
-    repository: yandex-practicum-sprint2-movies-service
+    repository: ghcr.io/umid-berdiev/yandex-practicum-sprint2/movies-service
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   replicas: 1
   resources:
     limits:
@@ -89,9 +89,9 @@ moviesService:
 eventsService:
   enabled: true
   image:
-    repository: yandex-practicum-sprint2-events-service
+    repository: ghcr.io/umid-berdiev/yandex-practicum-sprint2/events-service
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   replicas: 1
   resources:
     limits:
