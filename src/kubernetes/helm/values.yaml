@@ -3,7 +3,7 @@ global:
   domain: cinemaabyss.example.com
 
 imagePullSecrets:
-  # Set via: helm install ... --set imagePullSecrets.dockerconfigjson=$(cat ~/.docker/config.json | base64)
+  # Set via: helm install ... --set imagePullSecrets.dockerconfigjson=$(cat ~/.docker/config.json | base64) //
   dockerconfigjson: ""
 
 database:
@@ -11,7 +11,7 @@ database:
   port: 5432
   name: cinemaabyss
   user: postgres
-  # Set via: helm install ... --set database.password=<base64-encoded-password>
+  # Set via: helm install ... --set database.password=<base64-encoded-password> //
   password: ""
   image:
     repository: postgres
