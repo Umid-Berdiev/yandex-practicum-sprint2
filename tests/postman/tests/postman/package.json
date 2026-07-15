@@ -1,0 +1,11 @@
+{
+  "name": "postman-tests",
+  "version": "1.0.0",
+  "scripts": {
+    "test:local": "./run-tests.sh -e local",
+    "test:docker": "./run-tests.sh -d -e docker"
+  },
+  "dependencies": {
+    "newman": "^5.3.2"
+  }
+}

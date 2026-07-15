@@ -1,0 +1,18 @@
+monolith:
+  image:
+    pullPolicy: IfNotPresent
+
+proxyService:
+  image:
+    pullPolicy: IfNotPresent
+
+moviesService:
+  image:
+    pullPolicy: IfNotPresent
+
+eventsService:
+  image:
+    pullPolicy: IfNotPresent
+
+database:
+  password: "cG9zdGdyZXNfcGFzc3dvcmQ="
